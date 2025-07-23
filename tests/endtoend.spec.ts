@@ -1,15 +1,16 @@
-import {test} from '@playwright/test';
+import {Locator, test} from '@playwright/test';
 import { loginpage1 } from './pages/loginpage2';
-
-const users:any[] = [
-    {username:"standard_user", password:"secret_sauce"},
-    {username:"locked_out_user", password:"secret_sauce"}
-]
-test("login_test_case",async({page})=>{
-for(let user of users){
-    const loginpage = new loginpage1(page);
-    await loginpage.goto();
-    await loginpage.login("standard_user", "secret_sauce");
-} 
-   
-})
+import { users } from './pages/credentials';
+ 
+// const users:any[] = [
+//     {username:"standard_user",password:"secret_sauce",testcase:"login with credentials"},
+//     {username:"standard_user",password:"secret_sauce",testcase:"login with locked user"}
+// ]
+for (let user of users){
+    test(`${user.testcase}`,async({page})=>{
+ 
+        const loginpage2 = new loginpage1(page);
+        await loginpage2.goto();
+        await loginpage2.login(user.username,user.password);
+    });
+}
